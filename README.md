@@ -1,1 +1,3 @@
-# Mandarins-Diet
+# MandarinsDiet
+
+a [Sails](http://sailsjs.org) application

@@ -1,0 +1,22 @@
+
+<div id="credits" class="content-section-a">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3 text-center wrap_title">
+        <div class="list-group">
+          <a href="#" class="list-group-item active">
+            Список уроков
+          </a>
+          <% _.forEach(lists, function(list, _i) { %>
+          <a href="/admin/lessons/add/<%= list.id%>" class="list-group-item">
+            #<%= ++_i %>. <%= list.title%>
+          </a>
+          <% })%>
+          <a href="/admin/lessons/add" class="list-group-item active">
+            Добавить новый
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
