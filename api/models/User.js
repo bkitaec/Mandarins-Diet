@@ -1,38 +1,55 @@
+/**
+ * User
+ *
+ * @module      :: Model
+ * @description :: This is the base user model
+ * @docs        :: http://waterlock.ninja/documentation
+ */
 
-var bcrypt = require('bcrypt');
+module.exports = {
 
-var User = {
-  // Enforce model schema in the case of schemaless databases
-  schema: true,
-
-  attributes: {
-    username  : { type: 'string', unique: true },
-    email     : { type: 'email',  unique: true },
-    passports : { collection: 'Passport', via: 'user' },
-    password: {
-      type: 'string',
+  attributes: require('waterlock').models.user.attributes({
+    username:{
+      type:"string",
+      required:true,
+      unique:true
     },
-
-    toJSON: function() {
-      var obj = this.toObject();
-      delete obj.password;
-      return obj;
+    //Password is not needed here
+    //password: {
+    //  type: "string",
+    //  required: true
+    //},
+    firstname:{
+      type: "string",
+      required: true
+    },
+    lastname:{
+      type: "string",
+      required: true
+    },
+    email:{
+      type: "string",
+      email: true,
+      required: true,
+      unique: true
+    },
+    jsonWebTokens: {
+      collection: 'jwt',
+      via: 'owner'
+    },
+    enabled:{
+      type:'boolean',
+      defaultsTo:true
+    },
+    role:{
+      type:"string",
+      enum:['normal','admin','teacher'],
+      required:true,
+      defaultsTo:"normal" //could be admin, normal
     }
-  },
-  beforeCreate: function(user, cb) {
-    bcrypt.genSalt(10, function(err, salt) {
-      bcrypt.hash(user.password, salt, function(err, hash) {
-        if (err) {
-          console.log(err);
-          cb(err);
-        } else {
-          user.password = hash;
-          cb();
-        }
-      });
-    });
-  }
 
+  }),
+
+  beforeCreate: require('waterlock').models.user.beforeCreate,
+  beforeUpdate: require('waterlock').models.user.beforeUpdate
 };
-
-module.exports = User;

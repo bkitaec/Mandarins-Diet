@@ -21,8 +21,6 @@ module.exports = {
   },
 
   list: function (req, res) {
-    console.log(req.param('content'));
-
     ApiService.send('/lessons', {}, function (answ) {
       if(!ControllerService.checkResponse(answ, res)) return;
 

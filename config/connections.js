@@ -32,6 +32,31 @@ module.exports.connections = {
     adapter: 'sails-disk'
   },
 
+  devMysqlServer: {
+    adapter: 'sails-mysql',
+    host: 'localhost',
+    port:3306,
+    user: 'root',
+    password: 'root',
+    database: 'sails_jwt_template'
+  },
+  prodMysqlServer: {
+    adapter: 'sails-mysql',
+    host: 'localhost',
+    port:3306,
+    user: 'test',
+    password: 'test',
+    database: 'sails_jwt_template'
+  },
+  testMysqlServer: {
+    adapter: 'sails-mysql',
+    host: 'localhost',
+    port:3306,
+    user: 'root',
+    password: 'root',
+    database: 'sails_jwt_template_test'
+  },
+
   /***************************************************************************
   *                                                                          *
   * MySQL is the world's most popular relational database.                   *
