@@ -10,10 +10,10 @@
  * below by its filename, minus the extension, (e.g. "authenticated")
  *
  * For more information on how policies work, see:
- * http://sailsjs.org/#!/documentation/concepts/Policies
+ * http://sailsjs.org/#/documentation/concepts/Policies
  *
  * For more information on configuring policies, check out:
- * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.policies.html
+ * http://sailsjs.org/#/documentation/reference/sails.config/sails.config.policies.html
  */
 
 
@@ -26,10 +26,22 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  '*': [
-  ],
+   // '*': true,
+   '*': ['isAdmin'],
 
+	AuthController:{
+		'*': true,
+	},
+	'Admin/AuthController':{
+		'*': true,
+	},
+	UserController:{
+		create: true,
+	},
 
+	HomeController:{
+		home: true
+	},
   /***************************************************************************
   *                                                                          *
   * Here's an example of mapping some policies to run before a controller    *
@@ -50,4 +62,9 @@ module.exports.policies = {
 		// before letting any users feed our rabbits
 		// feed : ['isNiceToAnimals', 'hasRabbitFood']
 	// }
+	// RtestController:{
+	//   admin:['isAdmin'],
+	//   restricted:['hasJsonWebToken'],
+	//   open:true
+  	// },
 };

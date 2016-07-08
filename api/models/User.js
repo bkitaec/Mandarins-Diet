@@ -20,12 +20,10 @@ module.exports = {
     //  required: true
     //},
     firstname:{
-      type: "string",
-      required: true
+      type: "string"
     },
     lastname:{
-      type: "string",
-      required: true
+      type: "string"
     },
     email:{
       type: "string",
@@ -43,13 +41,13 @@ module.exports = {
     },
     role:{
       type:"string",
-      enum:['normal','admin','teacher'],
+      enum:['normal','pro','admin'],
       required:true,
       defaultsTo:"normal" //could be admin, normal
     }
 
   }),
-
+  
   beforeCreate: require('waterlock').models.user.beforeCreate,
   beforeUpdate: require('waterlock').models.user.beforeUpdate
 };

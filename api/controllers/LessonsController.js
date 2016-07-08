@@ -4,7 +4,8 @@ module.exports = {
 
     var done = _.after(1, function() {
       return res.view('lessons/view', {
-        lesson: lesson
+        lesson: lesson,
+        layout: 'layout'
       });
 
     });

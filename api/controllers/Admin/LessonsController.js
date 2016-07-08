@@ -21,14 +21,19 @@ module.exports = {
   },
 
   list: function (req, res) {
-    ApiService.send('/lessons', {}, function (answ) {
-      if(!ControllerService.checkResponse(answ, res)) return;
-
+    var lessons;
+    var done = _.after(1, function() {
       return res.view('lessons/list', {
-        lists: answ.body
+        lists: lessons
       });
+
     });
 
+    Lessons.find(function (err, record) {
+      if(!ControllerService.checkDb(err, record, res)) return;
+      lessons = record
+      done();
+    })
   },
 
 

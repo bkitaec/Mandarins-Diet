@@ -16,10 +16,10 @@ module.exports = {
    * Set the default database connection for models in the development       *
    * environment (see config/connections.js and config/models.js )           *
    ***************************************************************************/
-  appUrl : 'http://localhost:1337',
-  
-  // models: {
-  //   connection: 'someMongodbServer'
-  // }
-
+  appUrl : 'http://localhost:1338',
+    
+  models: {
+      connection: 'devMysqlServer',
+      migrate:'safe'
+  }
 };

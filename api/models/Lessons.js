@@ -7,7 +7,7 @@
 
 module.exports = {
 
-  connection: 'localDiskDb',
+  connection: 'devMysqlServer',
   tableName: 'lessons',
 
   // autoPK: false,
@@ -19,6 +19,10 @@ module.exports = {
       type: 'integer',
       primaryKey: true,
       autoIncrement: true
+    }
+  , category_id:{
+      type: 'integer',
+      model: 'lessonscategory'
     }
   , title: {
       type: 'string',

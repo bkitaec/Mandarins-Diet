@@ -50,19 +50,19 @@ module.exports = require('waterlock').actions.user({
   create: function(req, res) {
     //console.log("customsied!!!!!!");
     var params = req.params.all(),
-      auth = {
-        email: params.email,
-        password: params.password
-      },
-      userObj = {
-        username:params.username,
-        firstname:params.firstname,
-        lastname:params.lastname,
-        email:params.email
-      };
+        auth = {
+          email: params.email,
+          password: params.password
+        },
+        userObj = {
+          username:params.username,
+          firstname:params.firstname,
+          lastname:params.lastname,
+          email:params.email
+        };
 
     User.create(userObj)
-      .exec(function (err, user){
+        .exec(function (err, user){
           if (err){
             waterlock.logger.debug(err);
             req.session.flash = {
@@ -94,7 +94,7 @@ module.exports = require('waterlock').actions.user({
             });
           });
         }
-      );
+    );
   },
   show:function(req,res){ //won't see unless the owner
 

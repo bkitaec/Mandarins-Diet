@@ -1,21 +1,172 @@
-<% if (errors) {%>
-  <% errors.forEach(function (error) { %>
-    <%= __(error) %>
-  <% }) %>
-<% } %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<form role="form" action="/auth/local" method="post">
-  <input type="text" name="identifier" placeholder="Username or Email">
-  <input type="password" name="password" placeholder="Password">
-  <button type="submit">Sign in</button>
-</form>
+  <title>Gentellela Alela! | </title>
 
-<% if (Object.keys(providers).length) {%>
-  <h4>You can also use one of these...</h4>
+  <!-- Bootstrap -->
+  <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <!-- NProgress -->
+  <link href="/vendors/nprogress/nprogress.css" rel="stylesheet">
+  <!-- Animate.css -->
+  <link href="https://colorlib.com/polygon/gentelella/css/animate.min.css" rel="stylesheet">
 
-  <% Object.keys(providers).forEach(function (key) { %>
-    <a href="/auth/<%= providers[key].slug %>" role="button"><%= providers[key].name %></a>
-  <% }) %>
-<% } %>
+  <!-- Custom Theme Style -->
+  <link href="/admin/css/custom.min.css" rel="stylesheet">
+</head>
 
+<body class="login">
+<div>
+  <a class="hiddenanchor" id="signup"></a>
+  <a class="hiddenanchor" id="signin"></a>
 
+  <div class="login_wrapper">
+    <div class="animate form login_form">
+      <section class="login_content">
+        <form >
+          <h1>Login Form</h1>
+          <div id="error"></div>
+          <div>
+            <input id="email" type="email" class="form-control" placeholder="Email" required="" />
+          </div>
+          <div>
+            <input id="password" type="password" class="form-control" placeholder="Password" required="" />
+          </div>
+          <div>
+            <a class="btn btn-default submit" id="submit_login" href="#">Log in</a>
+            <a class="reset_pass" href="#">Lost your password?</a>
+          </div>
+
+          <div class="clearfix"></div>
+
+          <div class="separator">
+            <p class="change_link">New to site?
+              <a href="#signup" class="to_register"> Create Account </a>
+            </p>
+
+            <div class="clearfix"></div>
+            <br />
+
+            <div>
+              <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
+              <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <div id="register" class="animate form registration_form">
+      <section class="login_content">
+        <form>
+          <h1>Create Account</h1>
+          <div>
+            <input id="create_name" type="text" class="form-control" placeholder="Username" required="" />
+          </div>
+          <div>
+            <input id="create_email" type="email" class="form-control" placeholder="Email" required="" />
+          </div>
+          <div>
+            <input id="create_password" type="password" class="form-control" placeholder="Password" required="" />
+          </div>
+          <div>
+            <a class="btn btn-default submit" id="submit_create" href="#">Submit</a>
+          </div>
+
+          <div class="clearfix"></div>
+
+          <div class="separator">
+            <p class="change_link">Already a member ?
+              <a href="#signin" class="to_register"> Log in </a>
+            </p>
+
+            <div class="clearfix"></div>
+            <br />
+
+            <div>
+              <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
+              <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+</div>
+<script src="/vendors/jquery/dist/jquery.min.js"></script>
+
+<script>
+  window.onload=function(){
+
+    function login(data) {
+      $.ajax({
+        async       : false,
+        type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+        url         : '/auth/login', // the url where we want to POST
+        data        : data, // our data object
+        success     : function (data) {
+          $.ajax({
+            type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+            url         : '/auth/setoken', // the url where we want to POST
+            data        : data, // our data object
+            success     : function (data) {
+              window.location.href = '/admin/lessons/list';
+            }
+          });
+        },
+        error     : function(data) {
+          $('#error').text(data.responseText);
+        }
+      });
+    }
+
+    $('#submit_login').click(function(event) {
+      login({
+        'email'      : $('#email').val(),
+        'password'     : $('#password').val()
+      })
+
+      return false;
+    });
+    $('#submit_create').click(function(event) {
+      var formData = {
+        'email'      : $('#create_email').val(),
+        'password'     : $('#create_password').val(),
+        'username'     : $('#create_name').val()
+      };
+      $.ajax({
+        async       : false,
+        type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+        url         : '/user/create', // the url where we want to POST
+        data        : formData, // our data object
+        success     : function (data) {
+            $.ajax({
+              type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+              url         : '/auth/setoken', // the url where we want to POST
+              data        : {
+                'email'      : $('#create_email').val(),
+                'password'     : $('#create_password').val()
+              }, // our data object
+              success     : function (data) {
+                window.location.href = '/admin/lessons/list';
+              }
+            });
+        },
+        error     : function(data) {
+          $('#error').text(data.responseText);
+        }
+      });
+      return false;
+    });
+  };
+</script>
+
+</body>
+</html>

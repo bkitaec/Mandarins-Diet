@@ -1,20 +1,56 @@
+<div class="">
+  <div class="page-title">
+    <div class="title_left">
+      <h3>Plain Page</h3>
+    </div>
+  </div>
 
-<div id="credits" class="content-section-a">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3 text-center wrap_title">
-        <div class="list-group">
-          <a href="#" class="list-group-item active">
-            Список уроков
-          </a>
-          <% _.forEach(lists, function(list, _i) { %>
-          <a href="/admin/lessons/add/<%= list.id%>" class="list-group-item">
-            #<%= ++_i %>. <%= list.title%>
-          </a>
-          <% })%>
-          <a href="/admin/lessons/add" class="list-group-item active">
-            Добавить новый
-          </a>
+  <div class="clearfix"></div>
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Plain Page</h2>
+          <ul class="nav navbar-right panel_toolbox">
+            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Settings 1</a>
+                </li>
+                <li><a href="#">Settings 2</a>
+                </li>
+              </ul>
+            </li>
+            <li><a class="close-link"><i class="fa fa-close"></i></a>
+            </li>
+          </ul>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <div id="credits" class="content-section-a">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-6 col-md-offset-3 text-center wrap_title">
+                  <div class="list-group">
+                    <a href="#" class="list-group-item active">
+                      Список уроков
+                    </a>
+                    <% _.forEach(lists, function(list, _i) { %>
+                    <a href="/admin/lessons/add/<%= list.id%>" class="list-group-item">
+                      #<%= ++_i %>. <%= list.title%>
+                    </a>
+                    <% })%>
+                    <a href="/admin/lessons/add" class="list-group-item active">
+                      Добавить новый
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

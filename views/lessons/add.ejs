@@ -1,72 +1,106 @@
-<div class="container-fluid">
+<div class="">
+  <div class="page-title">
+    <div class="title_left">
+      <h3>Редактирование урока</h3>
+    </div>
+  </div>
+
+  <div class="clearfix"></div>
+
   <div class="row">
-    <% if( _.size(lesson) > 0){ %>
-      <h2 class="demo-text">Редактирование урока: "<%= _.size(lesson) > 0?lesson.title:""%>"</h2>
-    <%}else{%>
-      <h2 class="demo-text">Добавление нового урока</h2>
-    <%}%>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12 nopadding">
-          <form class="form-horizontal">
-            <fieldset>
-              <div class="form-group">
-                <label for="inpuTitle" class="col-lg-2 control-label">Title</label>
-                <div class="col-lg-10">
-                  <input type="text" name="title" class="form-control" id="inpuTitle" value="<%= _.size(lesson) > 0?lesson.title:"" %>" placeholder="Title">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="textArea" class="col-lg-2 control-label">Textarea</label>
-                <div class="col-lg-10">
-                  <textarea class="form-control" id="txtEditor" name="content" value=""></textarea>
-                  <span class="help-block">A longer block of help text that breaks onto a new line and may extend beyond one line.</span>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-lg-10 col-lg-offset-2">
-                  <button type="reset" class="btn btn-default">Cancel</button>
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-              </div>
-            </fieldset>
-          </form>
-          <ul class="pager">
-            <li class="previous"><a href="/admin/lessons/list">&larr; Вернуться к списку</a></li>
-            <!--
-              <li class="next"><a href="#">Newer &rarr;</a></li>
-            -->
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>"<%= _.size(lesson) > 0?lesson.title:""%>"</h2>
+          <ul class="nav navbar-right panel_toolbox">
+            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Settings 1</a>
+                </li>
+                <li><a href="#">Settings 2</a>
+                </li>
+              </ul>
+            </li>
+            <li><a class="close-link"><i class="fa fa-close"></i></a>
+            </li>
           </ul>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <div class="container-fluid">
+            <div class="row">
+              <% if( _.size(lesson) > 0){ %>
+              <h2 class="demo-text">: </h2>
+              <%}else{%>
+              <h2 class="demo-text">Добавление нового урока</h2>
+              <%}%>
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-12 nopadding">
+                    <form class="form-horizontal">
+                      <fieldset>
+                        <div class="form-group">
+                          <label for="inpuTitle" class="col-lg-2 control-label">Title</label>
+                          <div class="col-lg-10">
+                            <input type="text" name="title" class="form-control" id="inpuTitle" value="<%= _.size(lesson) > 0?lesson.title:"" %>" placeholder="Title">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="textArea" class="col-lg-2 control-label">Textarea</label>
+                          <div class="col-lg-10">
+                            <textarea class="form-control" id="txtEditor" name="content" value=""></textarea>
+                            <span class="help-block">A longer block of help text that breaks onto a new line and may extend beyond one line.</span>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-lg-10 col-lg-offset-2">
+                            <button type="reset" class="btn btn-default">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                          </div>
+                        </div>
+                      </fieldset>
+                    </form>
+                    <ul class="pager">
+                      <li class="previous"><a href="/admin/lessons/list">&larr; Вернуться к списку</a></li>
+                      <!--
+                        <li class="next"><a href="#">Newer &rarr;</a></li>
+                      -->
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-
 <script>
+window.onload=function(){
+  $("#txtEditor").Editor();
 
-  $(document).ready(function() {
-    $("#txtEditor").Editor();
+  var url = '/lessons/create'
+  <% if( _.size(lesson) > 0){ %>
+    $('.Editor-editor').html('<%- lesson.content %>');
+    url = '/lessons/' + <%= lesson.id %>
+  <% }%>
+          $('.form-horizontal').submit(function () {
+            $(this).find('#txtEditor').val($('.Editor-editor').html());
+            $.ajax({
+              type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+              url         : url, // the url where we want to POST
+              data        : $(this).serialize(), // our data object
+              success     : function (data) {
+                alert('success');
+              }
+            });
 
-    var url = '/lessons/create'
-    <% if( _.size(lesson) > 0){ %>
-      $('.Editor-editor').html('<%- lesson.content %>');
-      url = '/lessons/' + <%= lesson.id %>
-    <% }%>
-    $('.form-horizontal').submit(function () {
-      $(this).find('#txtEditor').val($('.Editor-editor').html());
-      $.ajax({
-        type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
-        url         : url, // the url where we want to POST
-        data        : $(this).serialize(), // our data object
-        success     : function (data) {
-          alert('success');
-        }
-      });
+            return false;
+          })
 
-      return false;
-    })
-
-  });
+};
 </script>

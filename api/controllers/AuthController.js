@@ -9,10 +9,10 @@
  */
 
 module.exports = require('waterlock').waterlocked({
-  /* e.g.
-    action: function(req, res){
-  
+
+    setoken: function(req, res){
+        // return res.redirect('/admin/lessons/list');
+        return res.ok();
     }
-  */
 
 });

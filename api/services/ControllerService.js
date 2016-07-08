@@ -1,7 +1,6 @@
 module.exports = {
     checkResponse: function (response, res) {
         if (response.error) {
-            // console.log(response.error);
             console.log("ERR [ApiService]: " + response.error);
             if(response.status == 401)
                 return res.redirect('/login');

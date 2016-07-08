@@ -7,6 +7,10 @@ module.exports = {
         console.log(url)
         var req = unirest("GET", url);
 
+        req.headers({
+            "token": options.req.session.token
+        });
+
         // if (options.body) {
         //     if (_.size(options.body) > 0){
         //         // if(options.body.deviceId)
