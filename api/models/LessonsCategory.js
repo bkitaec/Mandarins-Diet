@@ -34,27 +34,7 @@ module.exports = {
       type: 'integer',
       defaultsTo: 0
     },
-
-
-    lessons: {
-      collection: 'lessons',
-      via: 'category_id'
-    },
-
-
-    lock: function (cb) {
-      this.status = 0;
-      this.save(cb);
-    },
-    unlock: function (cb) {
-      this.status = 1;
-      this.save(cb);
-    },
-    toJSON: function() {
-      var obj = this.toObject();
-      // delete obj.code;
-      return obj;
-    }
+    
   },
 
 };

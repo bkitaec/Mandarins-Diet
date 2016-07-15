@@ -22,7 +22,7 @@ module.exports = {
     }
   , category_id:{
       type: 'integer',
-      model: 'lessonscategory'
+      required: true
     }
   , title: {
       type: 'string',
@@ -34,15 +34,7 @@ module.exports = {
       required: true
     },
 
-
-    lock: function (cb) {
-      this.status = 0;
-      this.save(cb);
-    },
-    unlock: function (cb) {
-      this.status = 1;
-      this.save(cb);
-    },
+    
     toJSON: function() {
       var obj = this.toObject();
       // delete obj.code;

@@ -47,9 +47,9 @@
                             <td class="name"><%= list.name %></td>
                             <td class="lang"><%= list.lang %></td>
                             <td class="order"><%= list.order %></td>
-                            <th class="edit_cat">
-                              <a href="#"><i class="fa fa-wrench"></i></a>
-                              <a href="#"><i class="fa red fa-close"></i></a>
+                            <th>
+                              <a class="edit" href="#"><i class="fa fa-wrench"></i></a>
+                              <a class="delete" href="#"><i class="fa red fa-close"></i></a>
                             </th>
                           </tr>
                         <% })%>
@@ -125,77 +125,78 @@
     </div>
   </div>
 </div>
-<script>
+<script type="text/javascript">
 window.onload=function() {
-  function setDefault() {
-    $('input:checked').parent().removeClass('active');
-    $('input:checked').removeAttr('checked');
-    $("input[name='is_edit']").val(0);
+    function setDefault() {
+      $('input:checked').parent().removeClass('active');
+      $('input:checked').removeAttr('checked');
+      $("input[name='is_edit']").val(0);
 
-    $("input[name='lang']").each(function (index) {
-        if($(this).val() == 'ru'){
+      $("input[name='lang']").each(function (index) {
+          if($(this).val() == 'ru'){
+            $(this).parent().addClass('active');
+            $(this).attr('checked', true);
+          }
+      });
+      $("input[name='name']").val('');
+      $("input[name='order']").val(1);
+      $("#submit").text('Сохранить')
+    }
+
+    $('#reset').click(function () {
+        setDefault();
+      return false;
+    });
+
+    $('.edit').click(function () {
+      $('input:checked').parent().removeClass('active');
+      $('input:checked').removeAttr('checked');
+
+      var category_tr = $(this).parent().parent();
+      $("input[name='id']").val(category_tr.find('.category_id').attr('category_id'));
+      $("input[name='is_edit']").val(1);
+
+      $("input[name='lang']").each(function (index) {
+        if($(this).val() == category_tr.find('.lang').text()){
           $(this).parent().addClass('active');
           $(this).attr('checked', true);
         }
+      });
+      $("input[name='name']").val(getTrVal(category_tr, '.name'));
+      $("input[name='order']").val(getTrVal(category_tr, '.order'));
+      $("#submit").text('Обновить');
+
+      return false;
     });
-    $("input[name='name']").val('');
-    $("input[name='order']").val(1);
-    $("#submit").text('Сохранить')
-  }
 
-  $('#reset').click(function () {
-      setDefault();
-    return false;
-  });
-
-  function getTrVal(elem, cl) {
-    return elem.find(cl).text();
-  };
-
-  $('.edit_cat').click(function () {
-    $('input:checked').parent().removeClass('active');
-    $('input:checked').removeAttr('checked');
-
-    var category_tr = $(this).parent();
-    $("input[name='id']").val(category_tr.find('.category_id').attr('category_id'));
-    $("input[name='is_edit']").val(1);
-
-    $("input[name='lang']").each(function (index) {
-      if($(this).val() == category_tr.find('.lang').text()){
-        $(this).parent().addClass('active');
-        $(this).attr('checked', true);
-      }
+    $('.delete').click(function () {
+      var row_tr = $(this).parent().parent();
+      $.ajax({
+        type        : 'DELETE', // define the type of HTTP verb we want to use (POST for our form)
+        url         : '/lessonscategory/'+row_tr.find('.category_id').attr('category_id'), // the url where we want to POST
+        success     : function (data) {
+          successNotify('Удалено успешно');
+          row_tr.remove();
+        }
+      });
+      return false;
     });
-    $("input[name='name']").val(getTrVal(category_tr, '.name'));
-    $("input[name='order']").val(getTrVal(category_tr, '.order'));
-    $("#submit").text('Обновить');
 
-    return false;
-  })
-
-  function successNotify(text){
-    new PNotify({
-      title: 'Ура',
-      text: text,
-      type: 'success',
-      styling: 'bootstrap3'
+    $('#category_form').submit(function () {
+      var is_edit = $("input[name='is_edit']").val()
+      var url = is_edit=='0'?'/lessonscategory/create':'/lessonscategory/'+$("input[name='id']").val();
+      $.ajax({
+        type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+        url         : url, // the url where we want to POST
+        data        : $(this).serialize(), // our data object
+        success     : function (data) {
+          setDefault();
+          var stext = is_edit=='0'?'Категория добавлена':'Обновление прошло успешно!';
+          successNotify(stext);
+        }
+      });
+      return false;
     });
-  }
-  $('#category_form').submit(function () {
-    var is_edit = $("input[name='is_edit']").val()
-    var url = is_edit=='0'?'/lessonscategory/create':'/lessonscategory/'+$("input[name='id']").val();
-    $.ajax({
-      type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
-      url         : url, // the url where we want to POST
-      data        : $(this).serialize(), // our data object
-      success     : function (data) {
-        setDefault();
-        var stext = is_edit=='0'?'Категория добавлена':'Обновление прошло успешно!';
-        successNotify(stext);
-      }
-    });
-    return false;
-  });
 
 }
 </script>

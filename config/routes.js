@@ -36,6 +36,10 @@ module.exports.routes = {
     action: "home"
   },
 
+  'get /panel': {
+    controller: "PanelController",
+    action: "index"
+  },
 
   'get /lessons/view/:lesson_id':{
     controller: "LessonsController",
