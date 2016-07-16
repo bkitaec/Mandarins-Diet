@@ -8,7 +8,7 @@
 module.exports = {
 
   connection: 'devMysqlServer',
-  tableName: 'lessons',
+  tableName: 'audio_category',
 
   // autoPK: false,
   autoCreatedAt: true,
@@ -20,26 +20,16 @@ module.exports = {
       primaryKey: true,
       autoIncrement: true
     }
-  , category_id:{
-      type: 'integer',
-      required: true
-    }
-  , title: {
+    , name: {
       type: 'string',
       required: true
       // size: 250
     },
-    content: {
-      type: 'text',
-      required: true
+    lang: {
+      type:"string",
+      enum:['ru','en','cn'],
+      defaultsTo:"ru" //could be admin, normal
     },
-
-
-    toJSON: function() {
-      var obj = this.toObject();
-      // delete obj.code;
-      return obj;
-    }
   },
 
 };

@@ -8,7 +8,7 @@
 module.exports = {
 
   connection: 'devMysqlServer',
-  tableName: 'lessons',
+  tableName: 'audio',
 
   // autoPK: false,
   autoCreatedAt: true,
@@ -20,17 +20,17 @@ module.exports = {
       primaryKey: true,
       autoIncrement: true
     }
-  , category_id:{
+    , category_id:{
       type: 'integer',
       required: true
     }
-  , title: {
+    , url: {
       type: 'string',
       required: true
       // size: 250
     },
-    content: {
-      type: 'text',
+    title: {
+      type: 'string',
       required: true
     },
 
