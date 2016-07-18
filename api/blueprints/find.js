@@ -9,7 +9,7 @@
  */
 var actionUtil = require('sails/lib/hooks/blueprints/actionUtil');
 var _ = require('lodash');
-var async = require('sails/node_modules/async');
+var async = require('async');
 
 /**
  * Find Records

@@ -28,12 +28,15 @@ module.exports = {
       type: 'string',
       required: true
       // size: 250
-    },
-    content: {
-      type: 'text',
-      required: true
+    }
+  , content: {
+      type: 'text'
     },
 
+    contents: {
+      collection: 'lessonscontent',
+      via: 'lesson_id'
+    },
 
     toJSON: function() {
       var obj = this.toObject();

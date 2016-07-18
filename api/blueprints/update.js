@@ -102,7 +102,12 @@ module.exports = function updateOneRecord (req, res) {
 
   function cleanAnswears(matchingRecord) {
     if(matchingRecord.answers){
-        QuizAnswer.query('DELETE FROM sails_jwt_template.quiz_answer WHERE question_id is null',function(err, results) {
+        QuizAnswer.query('DELETE FROM quiz_answer WHERE question_id is null',function(err, results) {
+          console.log(err);
+        })
+    }
+    if(matchingRecord.contents){
+        LessonsContent.query('DELETE FROM lessons_content WHERE lesson_id is null',function(err, results) {
           console.log(err);
         })
     }

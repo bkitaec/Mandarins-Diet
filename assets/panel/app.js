@@ -3,8 +3,9 @@ myApp.config(['NgAdminConfigurationProvider',
   'RestangularProvider',
   function(nga, RestangularProvider) {
     // create an admin application
+    var baseUrl = ('http://localhost:1309/');
     var admin = nga.application('С我И Admin panel')
-      .baseApiUrl('http://localhost:1309/'); // main API endpoint
+      .baseApiUrl(baseUrl); // main API endpoint
 
     RestangularProvider.addFullRequestInterceptor(function(element, operation, what, url, headers, params, httpConfig) {
       if (operation == 'getList') {
@@ -87,7 +88,12 @@ myApp.config(['NgAdminConfigurationProvider',
         .targetEntity(lessonscategory)
         .targetField(nga.field('name'))
         .label('Category'),
-      nga.field('content', 'wysiwyg')
+      nga.field('contents', 'embedded_list') // Define a 1-N relationship with the (embedded) comment entity
+          .targetFields([ // which comment fields to display in the datagrid / form
+            nga.field('content', 'wysiwyg'),
+            nga.field('audio', 'file').uploadInformation({ 'url': baseUrl + 'audio/upload', 'apifilename': 'path' })
+          ]),
+
     ]);
 
     lessons.editionView().fields(lessons.creationView().fields());
@@ -155,7 +161,6 @@ myApp.config(['NgAdminConfigurationProvider',
         .targetField(nga.field('name')) // the field to be displayed in this list
         .cssClasses('hidden-xs')
     ]).listActions(['edit', 'delete']);
-    console.log(quizquestion.listView().fields());
 
     quizquestion.creationView().fields([
       nga.field('question'),
@@ -177,7 +182,6 @@ myApp.config(['NgAdminConfigurationProvider',
         .editable(false)
         .template('<span class="pull-right"><ma-filtered-list-button entity-name="quizanswer" filter="{ question_id: entry.values.id }" size="sm"></ma-filtered-list-button></span>')
     ]);
-    console.log(quizquestion.creationView().fields());
     quizquestion.editionView().fields(quizquestion.creationView().fields());
     admin.addEntity(quizquestion)
 

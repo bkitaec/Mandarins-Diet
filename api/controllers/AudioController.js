@@ -18,15 +18,16 @@ module.exports = {
     )
   },
   upload: function  (req, res) {
-    req.file('avatar').upload({
-      dirname: './assets/files/audio'
+    req.file('file').upload({
+      dirname: '../../assets/files/audio/' + new Date().getFullYear() + new Date().getMonth() + new Date().getDate()
     }, function (err, files) {
       if (err)
         return res.serverError(err);
 
       return res.json({
         message: files.length + ' file(s) uploaded successfully!',
-        files: files
+        files: files,
+        path: files[0].fd,
       });
     });
   }

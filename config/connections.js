@@ -28,9 +28,9 @@ module.exports.connections = {
   * Installed by default.                                                    *
   *                                                                          *
   ***************************************************************************/
-  localDiskDb: {
-    adapter: 'sails-disk'
-  },
+  //localDiskDb: {
+  //  adapter: 'sails-disk'
+  //},
 
   /***************************************************************************
   *                                                                          *
@@ -40,30 +40,23 @@ module.exports.connections = {
   * Run: npm install sails-mysql                                             *
   *                                                                          *
   ***************************************************************************/
-  devMysqlServer: {
-    adapter: 'sails-mysql',
-    host: 'localhost',
-    port:3306,
-    user: 'root',
-    password: 'root',
-    database: 'sails_jwt_template'
-  },
-  prodMysqlServer: {
-    adapter: 'sails-mysql',
-    host: 'localhost',
-    port:3306,
-    user: 'test',
-    password: 'test',
-    database: 'sails_jwt_template'
-  },
-  testMysqlServer: {
-    adapter: 'sails-mysql',
-    host: 'localhost',
-    port:3306,
-    user: 'root',
-    password: 'root',
-    database: 'sails_jwt_template_test'
-  },
+
+  //prodMysqlServer: {
+  //  adapter: 'sails-mysql',
+  //  host: 'localhost',
+  //  port:3306,
+  //  user: 'test',
+  //  password: 'test',
+  //  database: 'sails_jwt_template'
+  //},
+  //testMysqlServer: {
+  //  adapter: 'sails-mysql',
+  //  host: 'localhost',
+  //  port:3306,
+  //  user: 'root',
+  //  password: 'root',
+  //  database: 'sails_jwt_template_test'
+  //},
 
   /***************************************************************************
   *                                                                          *
@@ -73,14 +66,14 @@ module.exports.connections = {
   * Run: npm install sails-mongo                                             *
   *                                                                          *
   ***************************************************************************/
-  devMongodbServer: {
-    adapter: 'sails-mongo',
-    host: 'localhost',
-    port: 27017,
-    // user: 'username',
-    // password: 'password',
-    database: 'sails_jwt_template'
-  },
+  //devMongodbServer: {
+  //  adapter: 'sails-mongo',
+  //  host: 'localhost',
+  //  port: 27017,
+  //  // user: 'username',
+  //  // password: 'password',
+  //  database: 'sails_jwt_template'
+  //},
 
   /***************************************************************************
   *                                                                          *
@@ -91,13 +84,13 @@ module.exports.connections = {
   *                                                                          *
   *                                                                          *
   ***************************************************************************/
-  somePostgresqlServer: {
-    adapter: 'sails-postgresql',
-    host: 'YOUR_POSTGRES_SERVER_HOSTNAME_OR_IP_ADDRESS',
-    user: 'YOUR_POSTGRES_USER',
-    password: 'YOUR_POSTGRES_PASSWORD',
-    database: 'YOUR_POSTGRES_DB'
-  }
+  //somePostgresqlServer: {
+  //  adapter: 'sails-postgresql',
+  //  host: 'YOUR_POSTGRES_SERVER_HOSTNAME_OR_IP_ADDRESS',
+  //  user: 'YOUR_POSTGRES_USER',
+  //  password: 'YOUR_POSTGRES_PASSWORD',
+  //  database: 'YOUR_POSTGRES_DB'
+  //}
 
 
   /***************************************************************************
