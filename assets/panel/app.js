@@ -29,7 +29,13 @@ myApp.config(['NgAdminConfigurationProvider',
       published = [
         {value: 1, label: "True"},
         {value: 0, label: "False"}
-      ];
+      ],
+      app_type = [
+        {value: 'basic_cn', label: 'Базовый уровень'},
+        {value: 'intermediate_cn', label: 'Средний уровень'},
+        {value: 'advanced_cn', label: 'Высокий уровень'}
+      ]
+      ;
 
 
 
@@ -42,12 +48,14 @@ myApp.config(['NgAdminConfigurationProvider',
       nga.field('id'),
       nga.field('name').isDetailLink(true),
       nga.field('lang', 'choice').choices(langs),
+      nga.field('app_type', 'choice').choices(app_type),
       nga.field('order'),
     ]).listActions(['<ma-filtered-list-button entity-name="lessons" filter="{ category_id: entry.values.id }" size="xs" label="Related lessons"></ma-filtered-list-button>', 'edit', 'delete']);
     ;
     lessonscategory.creationView().fields([
       nga.field('name').validation({ required: true, minlength: 3, maxlength: 100 }),
       nga.field('lang', 'choice').choices(langs).validation({ required: true}),
+      nga.field('app_type', 'choice').choices(app_type).validation({ required: true}),
       nga.field('order', 'number').validation({ required: true }),
       nga.field('', 'template')
         .label('')
